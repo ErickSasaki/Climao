@@ -5,15 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.uniso.lpdm.climao.weather.WeatherByCity;
 
-import org.json.JSONObject;
-
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class Home extends AppCompatActivity {
@@ -26,11 +22,18 @@ public class Home extends AppCompatActivity {
         final TextView textView = (TextView) findViewById(R.id.test);
         textView.setText("new text!");
 
-        String cep = "18066007";
-        final String url = "http://viacep.com.br/ws/" + cep + "/json/";
+        Call<WeatherByCity> call = new RetrofitConfig().endpoints().getWeather("sorocaba");
 
-        Retrofit retrofit = NetworkUtils.getRetrofitInstance(url);
+        call.enqueue(new Callback<WeatherByCity>() {
+            @Override
+            public void onResponse(Call<WeatherByCity> call, Response<WeatherByCity> response) {
+                textView.setText("Country: " + response.body().getSys().getCountry());
+            }
 
-
+            @Override
+            public void onFailure(Call<WeatherByCity> call, Throwable t) {
+                textView.setText(t.toString());
+            }
+        });
     }
 }
