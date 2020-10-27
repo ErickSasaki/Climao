@@ -1,5 +1,7 @@
 package com.uniso.lpdm.climao.weather;
 
+// Classe usada para resposta do endpoint /data/2.5/weather
+// Foram criadas outras classes que representam objetos dentro de objetos da resposta.
 public class WeatherByCity {
 
     private Coord coord;
