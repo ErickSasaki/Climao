@@ -25,7 +25,7 @@ public class LoadingScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent navigateToHome = new Intent(LoadingScreen.this, Home.class);
+                Intent navigateToHome = new Intent(LoadingScreen.this, NextDaysWeather.class);
                 startActivity(navigateToHome);
                 finish();
             }
