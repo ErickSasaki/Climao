@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.uniso.lpdm.climao.api.RetrofitConfig;
 import com.uniso.lpdm.climao.seven_days_weather.Daily;
 import com.uniso.lpdm.climao.seven_days_weather.SevenDaysWeather;
 import com.uniso.lpdm.climao.utils.Converter;
@@ -29,6 +30,7 @@ public class NextDaysWeather extends AppCompatActivity {
         callRequest();
     }
 
+    // Chama a request e popula os campos/imagens.
     private void callRequest() {
 
         //TextViews do dia da semana.
