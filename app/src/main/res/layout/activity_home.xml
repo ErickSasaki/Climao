@@ -48,7 +48,15 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sol_poucas_nuvens" />
+        app:srcCompat="@drawable/sol" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:srcCompat="@drawable/sol_maroto" />
 
     <ImageView
         android:id="@+id/imageView2"
