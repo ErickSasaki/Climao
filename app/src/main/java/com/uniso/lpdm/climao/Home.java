@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.uniso.lpdm.climao.api.RetrofitConfig;
 import com.uniso.lpdm.climao.weather.WeatherByCity;
 
 import java.text.DecimalFormat;
@@ -14,7 +15,6 @@ import java.util.Calendar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class Home extends AppCompatActivity {
 

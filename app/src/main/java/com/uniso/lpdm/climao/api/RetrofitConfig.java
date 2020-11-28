@@ -1,4 +1,6 @@
-package com.uniso.lpdm.climao;
+package com.uniso.lpdm.climao.api;
+
+import com.uniso.lpdm.climao.api.EndpointsInterface;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
