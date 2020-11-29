@@ -17,6 +17,7 @@ import com.uniso.lpdm.climao.seven_days_weather.Hourly;
 import com.uniso.lpdm.climao.seven_days_weather.SevenDaysWeather;
 import com.uniso.lpdm.climao.utils.Converter;
 import com.uniso.lpdm.climao.utils.IconChange;
+import com.uniso.lpdm.climao.utils.Storage;
 import com.uniso.lpdm.climao.utils.Translator;
 
 import org.w3c.dom.Text;
@@ -39,33 +40,13 @@ public class HourlyWeather extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hourly_weather);
 
-        callResquest();
-    }
-
-    private void callResquest() {
-        // Configura a request passando o parâmetro da cidade.
-        Call<SevenDaysWeather> call = new RetrofitConfig().endpoints().getNextHoursWeather(-23.5, -47.46);
-
-        // Chama a request que foi configurada anteriormente.
-        call.enqueue(new Callback<SevenDaysWeather>() {
-            @Override
-            public void onResponse(Call<SevenDaysWeather> call, Response<SevenDaysWeather> response) {
-                // Apenas para facilitar o acesso do getDaily.
-                Hourly[] hourly = response.body().getHourly();
-
-                changeScreen(hourly);
-
-            }
-
-            @Override
-            public void onFailure(Call<SevenDaysWeather> call, Throwable t) {
-                Log.d("Teste2", "deu ruim! Erro: " + t.toString());
-            }
-        });
+        changeScreen();
     }
 
     // Mudará os valores e icones da tela baseado na resposta da api.
-    private void changeScreen(Hourly[] hourly) {
+    private void changeScreen() {
+
+        Hourly[] hourly = Storage.getInstance().getHourly();
 
         TextView[] temperatureViews = {
                 (TextView) findViewById(R.id.textView20),
