@@ -2,7 +2,10 @@ package com.uniso.lpdm.climao;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,7 +16,6 @@ import com.uniso.lpdm.climao.utils.Translator;
 import com.uniso.lpdm.climao.weather.WeatherByCity;
 
 import java.text.DecimalFormat;
-import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,6 +25,7 @@ public class Home extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -62,10 +65,19 @@ public class Home extends AppCompatActivity {
                     (TextView) findViewById(R.id.textView46),
                 };
 
+                ImageView iconsView[] = {
+                        (ImageView) findViewById(R.id.imageView25),
+                        (ImageView) findViewById(R.id.imageView27),
+                        (ImageView) findViewById(R.id.imageView28),
+                        (ImageView) findViewById(R.id.imageView26),
+                };
+
                 String[] messages = MainMessages.getMessages(response.body().getWeather()[0], response.body().getMain());
+                int[] icons = MainMessages.getMessageIcon(response.body().getWeather()[0], response.body().getMain());
 
                 for (int i = 0; i < 4; i++) {
                     messagesView[i].setText(messages[i]);
+                    iconsView[i].setImageResource(icons[i]);
                 }
 
             }
@@ -77,5 +89,13 @@ public class Home extends AppCompatActivity {
                 graus.setText(t.toString());
             }
         });
+    }
+
+    /**
+     * Navega para próxima página.
+     */
+    public void navigate(View view) {
+        Intent navigateToNextDaysWeather = new Intent(Home.this, NextDaysWeather.class);
+        startActivity(navigateToNextDaysWeather);
     }
 }

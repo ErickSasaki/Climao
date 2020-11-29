@@ -2,8 +2,10 @@ package com.uniso.lpdm.climao;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -109,6 +111,16 @@ public class NextDaysWeather extends AppCompatActivity {
                 Log.d("Teste2", "deu ruim! Erro: " + t.toString());
             }
         });
+    }
+
+    public void navigateBack(View view) {
+        Intent navigateBack = new Intent(NextDaysWeather.this, Home.class);
+        startActivity(navigateBack);
+    }
+
+    public void navigateNext(View view) {
+        Intent navigateBack = new Intent(NextDaysWeather.this, HourlyWeather.class);
+        startActivity(navigateBack);
     }
 
 }

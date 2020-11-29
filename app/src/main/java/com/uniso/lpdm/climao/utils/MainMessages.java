@@ -1,5 +1,6 @@
 package com.uniso.lpdm.climao.utils;
 
+import com.uniso.lpdm.climao.R;
 import com.uniso.lpdm.climao.weather.Main;
 import com.uniso.lpdm.climao.weather.Weather;
 
@@ -256,6 +257,264 @@ public class MainMessages {
                 "Guarda-chuvinha para não molhar a cabeça, ou aquela capa chavosa.",
         };
         return messages;
+
+    }
+
+    /**
+     * Recebe os dados da api e retorna os icones correspondentes as mensagens.
+     * @param weather Dados do clima
+     * @param main Dados de temperatura e umidade.
+     * @return Icone
+     */
+    public static int[] getMessageIcon(Weather weather, Main main) {
+
+        String weatherMain = weather.getMain();
+        String description = weather.getDescription();
+        Boolean hot = false;
+
+        if (Converter.kelvinToCelcius(main.getTemp()) > 20) {
+            hot = true;
+        }
+
+
+        Boolean sol = true;
+
+        // Usa a classe Calendar pra pegar a Hora atual.
+        Calendar now = Calendar.getInstance();
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+
+        // Caso seja noite define sol = false, usado para trocar icone de sol para lua.
+        if (hour < 6 && hour > 19 ) {
+            sol = false;
+        }
+
+        if (weatherMain.equals("Clear") && sol) {
+
+            if (hot) {
+                int icons[] = {
+                        R.drawable.oculos,
+                        R.drawable.protetor,
+                        R.drawable.bone,
+                        R.drawable.agua,
+                };
+                return icons;
+            } else {
+                int icons[] = {
+                        R.drawable.protetor,
+                        R.drawable.agua,
+                        R.drawable.oculos,
+                        0,
+                };
+                return icons;
+            }
+        }
+
+        if (weatherMain.equals("Clear")) {
+
+            if (hot) {
+                int icons[] = {
+                        R.drawable.estrela,
+                        R.drawable.andar,
+                        R.drawable.estrela,
+                        R.drawable.chinelo,
+                };
+                return icons;
+            } else {
+                int icons[] = {
+                        R.drawable.luazinha,
+                        R.drawable.pipoca,
+                        R.drawable.andar,
+                        R.drawable.estrela,
+                };
+                return icons;
+            }
+
+        }
+
+        if (weatherMain.equals("Clouds")) {
+
+            if (description.equals("few clouds")) {
+                if (sol) {
+
+                    if (hot) {
+                        int icons[] = {
+                                R.drawable.oculos,
+                                R.drawable.protetor,
+                                R.drawable.agua,
+                                0,
+                        };
+                        return icons;
+                    } else {
+                        int icons[] = {
+                                R.drawable.protetor,
+                                R.drawable.agua,
+                                R.drawable.oculos,
+                                0,
+                        };
+                        return icons;
+                    }
+
+                } else {
+
+                    if (hot) {
+                        int icons[] = {
+                                R.drawable.andar,
+                                R.drawable.andar,
+                                R.drawable.chinelo,
+                                0,
+                        };
+                        return icons;
+                    } else {
+                        int icons[] = {
+                                R.drawable.chinelo,
+                                R.drawable.andar,
+                                R.drawable.blusa,
+                                R.drawable.blusa,
+                        };
+                        return icons;
+                    }
+
+                }
+            }
+
+            else if (description.equals("scattered clouds")) {
+                if (sol) {
+
+                    if (hot) {
+                        int icons[] = {
+                                R.drawable.guarda_chuva,
+                                R.drawable.agua,
+                                R.drawable.protetor,
+                                0,
+                        };
+                        return icons;
+                    } else {
+                        int icons[] = {
+                                R.drawable.guarda_chuva,
+                                R.drawable.agua,
+                                R.drawable.blusa,
+                                0,
+                        };
+                        return icons;
+                    }
+
+                } else {
+
+                    if (hot) {
+                        int icons[] = {
+                                R.drawable.guarda_chuva,
+                                R.drawable.andar,
+                                R.drawable.estrela,
+                                0,
+                        };
+                        return icons;
+                    } else {
+                        int icons[] = {
+                                R.drawable.andar,
+                                R.drawable.estrela,
+                                R.drawable.cha,
+                                R.drawable.blusa,
+                        };
+                        return icons;
+                    }
+
+                }
+            }
+
+        }
+
+        if ((weatherMain.equals("Rain") || weatherMain.equals("Drizzle")) && sol) {
+
+            if (hot) {
+                int icons[] = {
+                        R.drawable.blusa,
+                        R.drawable.agua,
+                        0,
+                        0,
+                };
+                return icons;
+
+            } else {
+                int icons[] = {
+                        R.drawable.agua,
+                        R.drawable.blusa,
+                        R.drawable.cha,
+                        R.drawable.capa_chuva,
+                };
+                return icons;
+            }
+
+        }
+
+        if (weatherMain.equals("Rain") || weatherMain.equals("Drizzle")) {
+
+            if (hot) {
+                int icons[] = {
+                        R.drawable.capa_chuva,
+                        R.drawable.cha,
+                        R.drawable.andar,
+                        0,
+                };
+                return icons;
+            } else {
+                int icons[] = {
+                        R.drawable.blusa,
+                        R.drawable.cha,
+                        R.drawable.dormir,
+                        R.drawable.capa_chuva,
+                };
+                return icons;
+            }
+
+        }
+
+        if (weatherMain.equals("Thunderstorm") && sol) {
+            if (hot) {
+                int icons[] = {
+                        R.drawable.capa_chuva,
+                        R.drawable.agua,
+                        R.drawable.blusa,
+                        0,
+                };
+                return icons;
+            } else {
+                int icons[] = {
+                        R.drawable.capa_chuva,
+                        R.drawable.blusa,
+                        R.drawable.cha,
+                        0,
+                };
+                return icons;
+            }
+        }
+
+        if (weatherMain.equals("Thunderstorm")) {
+            if (hot) {
+                int icons[] = {
+                        R.drawable.capa_chuva,
+                        R.drawable.agua,
+                        R.drawable.pipoca,
+                        0,
+                };
+                return icons;
+            } else {
+                int icons[] = {
+                        R.drawable.capa_chuva,
+                        R.drawable.andar,
+                        R.drawable.cha,
+                        R.drawable.pipoca,
+                };
+                return icons;
+            }
+        }
+
+        int icons[] = {
+                R.drawable.blusa,
+                R.drawable.cha,
+                R.drawable.dormir,
+                R.drawable.capa_chuva,
+        };
+        return icons;
 
     }
 
