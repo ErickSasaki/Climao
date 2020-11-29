@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "545624150868",
+    "firebase_url": "https://climao-11478.firebaseio.com",
+    "project_id": "climao-11478",
+    "storage_bucket": "climao-11478.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545624150868:android:8e65639c832f1b87fe6ec1",
+        "android_client_info": {
+          "package_name": "com.uniso.lpdm.climao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545624150868-9kpanq0tldm6gdfr646kh1ajq7v8ecm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHiQtR6JUWYXYjodIRNzes3vzVbuSAxF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545624150868-9kpanq0tldm6gdfr646kh1ajq7v8ecm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

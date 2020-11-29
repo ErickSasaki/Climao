@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uniso.lpdm.climao.seven_days_weather.Daily;
 import com.uniso.lpdm.climao.seven_days_weather.SevenDaysWeather;
 import com.uniso.lpdm.climao.utils.Converter;
+import com.uniso.lpdm.climao.utils.IconChange;
 import com.uniso.lpdm.climao.utils.Translator;
 
 import java.sql.Timestamp;
@@ -19,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NextDaysWeather extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,16 @@ public class NextDaysWeather extends AppCompatActivity {
                 (TextView) findViewById(R.id.textView29),
         };
 
+        final ImageView[] icons = {
+                (ImageView) findViewById(R.id.imageView4),
+                (ImageView) findViewById(R.id.imageView5),
+                (ImageView) findViewById(R.id.imageView6),
+                (ImageView) findViewById(R.id.imageView7),
+                (ImageView) findViewById(R.id.imageView8),
+                (ImageView) findViewById(R.id.imageView9),
+                (ImageView) findViewById(R.id.imageView10),
+        };
+
         // Configura a request passando o parâmetro da cidade.
         Call<SevenDaysWeather> call = new RetrofitConfig().endpoints().getSevenDaysWeather(-23.5, -47.46);
 
@@ -81,8 +94,9 @@ public class NextDaysWeather extends AppCompatActivity {
 
                     // i - 1 pois o i do for está começando em 1.
                     days[i - 1].setText(Translator.DaysOfTheWeekTradution(date.getDay()));
-                    min[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMin())));
-                    max[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMax())));
+                    min[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMin())) + 'º');
+                    max[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMax())) + 'º');
+                    icons[i - 1].setImageResource(IconChange.miniIconsChange(daily[i].getWeather()[0]));
                 }
 
             }
