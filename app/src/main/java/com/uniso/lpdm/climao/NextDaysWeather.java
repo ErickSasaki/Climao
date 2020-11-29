@@ -4,24 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.uniso.lpdm.climao.api.RetrofitConfig;
 import com.uniso.lpdm.climao.seven_days_weather.Daily;
-import com.uniso.lpdm.climao.seven_days_weather.SevenDaysWeather;
 import com.uniso.lpdm.climao.utils.Converter;
 import com.uniso.lpdm.climao.utils.IconChange;
+import com.uniso.lpdm.climao.utils.Storage;
 import com.uniso.lpdm.climao.utils.Translator;
 
 import java.sql.Timestamp;
 import java.util.Date;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class NextDaysWeather extends AppCompatActivity {
 
@@ -29,11 +23,11 @@ public class NextDaysWeather extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next_days_weather);
-        callRequest();
+        changeScreen();
     }
 
     // Chama a request e popula os campos/imagens.
-    private void callRequest() {
+    private void changeScreen() {
 
         //TextViews do dia da semana.
         final TextView[] days = {
@@ -78,39 +72,21 @@ public class NextDaysWeather extends AppCompatActivity {
                 (ImageView) findViewById(R.id.imageView10),
         };
 
-        // Configura a request passando o parâmetro da cidade.
-        Call<SevenDaysWeather> call = new RetrofitConfig().endpoints().getSevenDaysWeather(-23.5, -47.46);
+        Daily[] daily = Storage.getInstance().getDaily();
 
-        // Chama a request que foi configurada anteriormente.
-        call.enqueue(new Callback<SevenDaysWeather>() {
-            // Caso a request de OK, irá popular alguns textViews com os atributos vindo da resposta.
-            @Override
-            public void onResponse(Call<SevenDaysWeather> call, Response<SevenDaysWeather> response) {
-                // Apenas para facilitar o acesso do getDaily.
-                Daily[] daily = response.body().getDaily();
+        // A variavel i começa em 1 pois o endpoint retorna o dia atual primeiro, e não precisamos dele aqui.
+        for (int i = 1; i < daily.length; i++) {
+            // Pega a data e coloca na variavel date
+            Timestamp timestamp = new Timestamp(daily[i].getDt());
+            Date date = new Date(timestamp.getTime() * 1000);
 
-                // A variavel i começa em 1 pois o endpoint retorna o dia atual primeiro, e não precisamos dele aqui.
-                for (int i = 1; i < daily.length; i++) {
-                    // Pega a data e coloca na variavel date
-                    Timestamp timestamp = new Timestamp(daily[i].getDt());
-                    Date date = new Date(timestamp.getTime() * 1000);
+            // i - 1 pois o i do for está começando em 1.
+            days[i - 1].setText(Translator.DaysOfTheWeekTranslator(date.getDay()));
+            min[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMin())) + 'º');
+            max[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMax())) + 'º');
+            icons[i - 1].setImageResource(IconChange.miniIconsChange(daily[i].getWeather()[0]));
+        }
 
-                    // i - 1 pois o i do for está começando em 1.
-                    days[i - 1].setText(Translator.DaysOfTheWeekTranslator(date.getDay()));
-                    min[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMin())) + 'º');
-                    max[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMax())) + 'º');
-                    icons[i - 1].setImageResource(IconChange.miniIconsChange(daily[i].getWeather()[0]));
-                }
-
-            }
-
-            // Caso a request de erro define o textView para mostrar o erro.
-            // Ainda falta implementar uma maneira melhor de tratar os erros.
-            @Override
-            public void onFailure(Call<SevenDaysWeather> call, Throwable t) {
-                Log.d("Teste2", "deu ruim! Erro: " + t.toString());
-            }
-        });
     }
 
     public void navigateBack(View view) {
