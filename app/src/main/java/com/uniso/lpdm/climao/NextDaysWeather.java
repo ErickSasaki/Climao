@@ -94,7 +94,7 @@ public class NextDaysWeather extends AppCompatActivity {
                     Date date = new Date(timestamp.getTime() * 1000);
 
                     // i - 1 pois o i do for está começando em 1.
-                    days[i - 1].setText(Translator.DaysOfTheWeekTradution(date.getDay()));
+                    days[i - 1].setText(Translator.DaysOfTheWeekTranslator(date.getDay()));
                     min[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMin())) + 'º');
                     max[i - 1].setText(Integer.toString(Converter.kelvinToCelcius(daily[i].getTemp().getMax())) + 'º');
                     icons[i - 1].setImageResource(IconChange.miniIconsChange(daily[i].getWeather()[0]));
