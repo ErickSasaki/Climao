@@ -2,15 +2,20 @@ package com.uniso.lpdm.climao;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uniso.lpdm.climao.api.RetrofitConfig;
+import com.uniso.lpdm.climao.utils.IconChange;
+import com.uniso.lpdm.climao.utils.MainMessages;
+import com.uniso.lpdm.climao.utils.Translator;
 import com.uniso.lpdm.climao.weather.WeatherByCity;
 
 import java.text.DecimalFormat;
-import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,6 +25,7 @@ public class Home extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -41,11 +47,39 @@ public class Home extends AppCompatActivity {
             // Caso a request de OK, irá popular alguns textViews com os atributos vindo da resposta.
             @Override
             public void onResponse(Call<WeatherByCity> call, Response<WeatherByCity> response) {
+
                 graus.setText((int) (response.body().getMain().getTemp() - 273.15) + "°C");
                 cidade.setText("em " + response.body().getName());
                 umidade.setText("Umidade: " + response.body().getMain().getHumidity() + "%");
-                clima.setText("Clima: " + response.body().getWeather()[0].getMain());
+                clima.setText("Clima: " + Translator.WeatherTranslator(response.body().getWeather()[0].getMain()));
                 vento.setText("Vento: " + decimalFormat.format(response.body().getWind().getSpeed() * 3.6) + "km/h");
+
+                ImageView tempo = (ImageView) findViewById(R.id.tempo);
+
+                tempo.setImageResource(IconChange.mainIconsChange(response.body().getWeather()[0]));
+
+                TextView messagesView[] = {
+                    (TextView) findViewById(R.id.textView6),
+                    (TextView) findViewById(R.id.textView5),
+                    (TextView) findViewById(R.id.textView4),
+                    (TextView) findViewById(R.id.textView46),
+                };
+
+                ImageView iconsView[] = {
+                        (ImageView) findViewById(R.id.imageView25),
+                        (ImageView) findViewById(R.id.imageView27),
+                        (ImageView) findViewById(R.id.imageView28),
+                        (ImageView) findViewById(R.id.imageView26),
+                };
+
+                String[] messages = MainMessages.getMessages(response.body().getWeather()[0], response.body().getMain());
+                int[] icons = MainMessages.getMessageIcon(response.body().getWeather()[0], response.body().getMain());
+
+                for (int i = 0; i < 4; i++) {
+                    messagesView[i].setText(messages[i]);
+                    iconsView[i].setImageResource(icons[i]);
+                }
+
             }
 
             // Caso a request de erro define o textView para mostrar o erro.
@@ -55,20 +89,13 @@ public class Home extends AppCompatActivity {
                 graus.setText(t.toString());
             }
         });
+    }
 
-        // Usa a classe Calendar pra pegar a Hora atual.
-        Calendar now = Calendar.getInstance();
-        int hour = now.get(Calendar.HOUR_OF_DAY);
-
-        // Pega a imagem do icone principal.
-        ImageView tempo = (ImageView) findViewById(R.id.tempo);
-
-        // Caso a hora esteja entre 6 e 19 irá mostrar o icone de sol, caso contrário o icone de lua.
-        // Ainda falta implementar os icones de tempo.
-        if (hour >= 6 && hour <= 19 ) {
-            tempo.setImageResource(R.drawable.sol_poucas_nuvens);
-        } else {
-            tempo.setImageResource(R.drawable.lua_poucas_nuvens);
-        }
+    /**
+     * Navega para próxima página.
+     */
+    public void navigate(View view) {
+        Intent navigateToNextDaysWeather = new Intent(Home.this, NextDaysWeather.class);
+        startActivity(navigateToNextDaysWeather);
     }
 }

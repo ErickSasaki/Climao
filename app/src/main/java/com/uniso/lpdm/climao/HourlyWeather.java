@@ -2,10 +2,12 @@ package com.uniso.lpdm.climao;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -133,5 +135,10 @@ public class HourlyWeather extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void navigateBack(View view) {
+        Intent navigateBack = new Intent(HourlyWeather.this, NextDaysWeather.class);
+        startActivity(navigateBack);
     }
 }

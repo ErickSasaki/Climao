@@ -21,11 +21,13 @@ public class LoadingScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
 
+
+
         // Após um tempo definido na variavel loadingTime muda para a atividade "home".
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent navigateToHome = new Intent(LoadingScreen.this, HourlyWeather.class);
+                Intent navigateToHome = new Intent(LoadingScreen.this, Home.class);
                 startActivity(navigateToHome);
                 finish();
             }
