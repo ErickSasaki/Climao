@@ -5,7 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#7878FA"
-    tools:context=".MainActivity">
+    tools:context=".NextDaysWeather">
+
+    <ImageView
+        android:id="@+id/imageView30"
+        android:layout_width="32dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:onClick="navigateBack"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/seta" />
+
+    <ImageView
+        android:id="@+id/imageView32"
+        android:layout_width="32dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:onClick="navigateNext"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/seta" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

@@ -7,7 +7,7 @@ public class Translator {
      * @param DayOfTheWeekNumber Número (0 -> domingo até 6 -> sábado)
      * @return Retorna o nome abreviado (0 -> domingo, retorna "Dom")
      */
-    public static String DaysOfTheWeekTradution(int DayOfTheWeekNumber) {
+    public static String DaysOfTheWeekTranslator(int DayOfTheWeekNumber) {
         switch (DayOfTheWeekNumber) {
             case 0: {
                 return "Dom";
@@ -34,6 +34,31 @@ public class Translator {
                 return "Dia da semana inválido!";
             }
         }
+    }
+    
+    public static String WeatherTranslator(String weather) {
+
+        switch (weather) {
+            case "Thunderstorm": {
+                return "Trovoadas";
+            }
+            case "Drizzle": {
+                return "Chuviscando";
+            }
+            case "Rain": {
+                return "Chuva";
+            }
+            case "Snow": {
+                return "Neve";
+            }
+            case "Clear": {
+                return "Céu Claro";
+            }
+            default: {
+                return "Nublado";
+            }
+        }
+
     }
 
 }
