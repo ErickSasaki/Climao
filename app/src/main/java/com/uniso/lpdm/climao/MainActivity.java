@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent navigateTo = new Intent(MainActivity.this, LoadingScreenA.class);
+        Intent navigateTo = new Intent(MainActivity.this, LoadingScreen.class);
         startActivity(navigateTo);
     }
 }

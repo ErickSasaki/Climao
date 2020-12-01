@@ -18,6 +18,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        android:textColor="#000"
+        android:background="@drawable/custom_button"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/textView47"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="É necessário ativar a notiicação."
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/bt_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="20dp"
+        android:textFontWeight="700"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

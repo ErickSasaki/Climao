@@ -16,7 +16,8 @@
         <activity android:name=".HourlyWeather"></activity>
         <activity android:name=".NextDaysWeather" />
         <activity android:name=".Home" />
-        <activity android:name="com.uniso.lpdm.climao.LoadingScreenA" />
+        <activity android:name=".LoadingScreen" />
+        <activity android:name=".LocationEmpty" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
