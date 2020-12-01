@@ -25,12 +25,15 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.uniso.lpdm.climao.utils.Storage;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getLocation();
@@ -68,10 +70,11 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     private void getLocation() {
 
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+        fusedLocationProviderClient = getFusedLocationProviderClient(this);
+
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
-            public void onComplete(@NonNull Task < Location > task) {
-                Location location = task.getResult();
+            public void onSuccess(Location location) {
                 if (location != null) {
                     try {
                         Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());

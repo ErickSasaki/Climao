@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.uniso.lpdm.climao.api.RetrofitConfig;
 import com.uniso.lpdm.climao.seven_days_weather.SevenDaysWeather;
@@ -64,10 +65,9 @@ public class LocationEmpty extends AppCompatActivity {
 
                 fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(LocationEmpty.this);
 
-                fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        Location location = task.getResult();
+                    public void onSuccess(Location location) {
                         if (location != null) {
                             try {
                                 Geocoder geocoder = new Geocoder(LocationEmpty.this, Locale.getDefault());
@@ -86,6 +86,7 @@ public class LocationEmpty extends AppCompatActivity {
                             } catch (IOException e) {
                                 Log.d("test", "deu ruim!!!");
                                 e.printStackTrace();
+                                finish();
                             }
                         }
                     }
