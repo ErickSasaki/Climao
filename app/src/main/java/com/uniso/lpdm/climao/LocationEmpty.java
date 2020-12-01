@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.os.Bundle;
@@ -29,10 +30,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LocationEmpty extends AppCompatActivity {
 
@@ -59,12 +56,13 @@ public class LocationEmpty extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         new Timer().scheduleAtFixedRate(new TimerTask(){
             @SuppressLint("MissingPermission")
             @Override
             public void run(){
+
+                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(LocationEmpty.this);
 
                 fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
@@ -79,44 +77,21 @@ public class LocationEmpty extends AppCompatActivity {
                                 // Separa uma string que contem os dados da localização do usuário
                                 String[] locations = addresses.get(0).getAddressLine(0).replace("-", ",").replace(" ", "").split(",");
 
-                                // Configura a request passando o parâmetro da cidade.
-                                Call<WeatherByCity> call = new RetrofitConfig().endpoints().getWeather(locations[3].toLowerCase());
+                                Storage.getInstance().setLocation(locations[3].toLowerCase());
 
-                                // Chama a request que foi configurada anteriormente.
-                                call.enqueue(new Callback<WeatherByCity>() {
-                                    // Caso a request de OK, irá popular alguns textViews com os atributos vindo da resposta.
-                                    @Override
-                                    public void onResponse(Call<WeatherByCity> call, Response<WeatherByCity> response) {
-                                        // Salva os dados no stotage.
-                                        Storage.getInstance().setWeatherByCity(response.body());
-
-                                        Float lat = response.body().getCoord().getLat();
-                                        Float lon = response.body().getCoord().getLon();
-
-                                        // Chama a próxima request que usa os dados de latitude e longitude.
-                                        callNextDaysWeather(lat, lon);
-                                        callHourlyWeather(lat, lon);
-                                    }
-
-                                    // Caso a request de erro mostra no log.
-                                    @Override
-                                    public void onFailure(Call<WeatherByCity> call, Throwable t) {
-                                        Log.d("error", t.toString());
-                                    }
-                                });
-
-                                // Enviar o usuário para o Home
-                                Intent navigateToHome = new Intent(LocationEmpty.this, Home.class);
+                                Intent navigateToHome = new Intent(LocationEmpty.this, LoadingScreen.class);
                                 startActivity(navigateToHome);
+                                finish();
 
                             } catch (IOException e) {
+                                Log.d("test", "deu ruim!!!");
                                 e.printStackTrace();
                             }
                         }
                     }
                 });
             }
-        },5000,5000);
+        },1000,1000);
     }
 
     private void hasLocation() {
@@ -135,50 +110,6 @@ public class LocationEmpty extends AppCompatActivity {
                 });
         final AlertDialog alert = builder.create();
         alert.show();
-    }
-
-    private void callNextDaysWeather(Float lat, Float lon) {
-        // Configura a request passando o parâmetro da cidade.
-        Call<SevenDaysWeather> call = new RetrofitConfig().endpoints().getSevenDaysWeather(lat, lon);
-
-        // Chama a request que foi configurada anteriormente.
-        call.enqueue(new Callback<SevenDaysWeather>() {
-
-            // Caso a request de OK, irá popular alguns textViews com os atributos vindo da resposta.
-            @Override
-            public void onResponse(Call<SevenDaysWeather> call, Response<SevenDaysWeather> response) {
-                Storage.getInstance().setDaily(response.body().getDaily());
-            }
-
-            // Caso a request de erro mostra no log.
-            @Override
-            public void onFailure(Call<SevenDaysWeather> call, Throwable t) {
-                Log.d("error", t.toString());
-            }
-
-        });
-    }
-
-    private void callHourlyWeather(double lat, double lon) {
-        // Configura a request passando o parâmetro da cidade.
-        Call<SevenDaysWeather> call = new RetrofitConfig().endpoints().getNextHoursWeather(lat, lon);
-
-        // Chama a request que foi configurada anteriormente.
-        call.enqueue(new Callback<SevenDaysWeather>() {
-
-            // Caso a request de OK, irá popular alguns textViews com os atributos vindo da resposta.
-            @Override
-            public void onResponse(Call<SevenDaysWeather> call, Response<SevenDaysWeather> response) {
-                Storage.getInstance().setHourly(response.body().getHourly());
-            }
-
-            // Caso a request de erro mostra no log.
-            @Override
-            public void onFailure(Call<SevenDaysWeather> call, Throwable t) {
-                Log.d("error", t.toString());
-            }
-
-        });
     }
 
 }
