@@ -58,41 +58,44 @@ public class LocationEmpty extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        new Timer().scheduleAtFixedRate(new TimerTask(){
-            @SuppressLint("MissingPermission")
+
+    }
+
+
+    @SuppressLint("MissingPermission")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(LocationEmpty.this);
+
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
-            public void run(){
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    try {
+                        Geocoder geocoder = new Geocoder(LocationEmpty.this, Locale.getDefault());
 
-                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(LocationEmpty.this);
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
-                fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            try {
-                                Geocoder geocoder = new Geocoder(LocationEmpty.this, Locale.getDefault());
+                        // Separa uma string que contem os dados da localização do usuário
+                        String[] locations = addresses.get(0).getAddressLine(0).replace("-", ",").replace(" ", "").split(",");
 
-                                List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        Storage.getInstance().setLocation(locations[3].toLowerCase());
 
-                                // Separa uma string que contem os dados da localização do usuário
-                                String[] locations = addresses.get(0).getAddressLine(0).replace("-", ",").replace(" ", "").split(",");
+                        Intent navigateToHome = new Intent(LocationEmpty.this, LoadingScreen.class);
+                        startActivity(navigateToHome);
+                        finish();
 
-                                Storage.getInstance().setLocation(locations[3].toLowerCase());
-
-                                Intent navigateToHome = new Intent(LocationEmpty.this, LoadingScreen.class);
-                                startActivity(navigateToHome);
-                                finish();
-
-                            } catch (IOException e) {
-                                Log.d("test", "deu ruim!!!");
-                                e.printStackTrace();
-                                finish();
-                            }
-                        }
+                    } catch (IOException e) {
+                        Log.d("test", "deu ruim!!!");
+                        e.printStackTrace();
+                        finish();
                     }
-                });
+                }
             }
-        },1000,1000);
+        });
+
+
     }
 
     private void hasLocation() {
