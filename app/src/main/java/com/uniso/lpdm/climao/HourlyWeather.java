@@ -48,6 +48,10 @@ public class HourlyWeather extends AppCompatActivity {
 
         Hourly[] hourly = Storage.getInstance().getHourly();
 
+        TextView cityView = (TextView) findViewById(R.id.textView32);
+
+        cityView.setText(Storage.getLocation());
+
         TextView[] temperatureViews = {
                 (TextView) findViewById(R.id.textView20),
                 (TextView) findViewById(R.id.textView21),
