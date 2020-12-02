@@ -49,6 +49,7 @@ public class LoadingScreen extends AppCompatActivity {
                 // Chama a próxima request que usa os dados de latitude e longitude.
                 callNextDaysWeather(lat, lon);
                 callHourlyWeather(lat, lon);
+                navigate();
             }
 
             // Caso a request de erro mostra no log.
@@ -58,7 +59,7 @@ public class LoadingScreen extends AppCompatActivity {
             }
         });
 
-        navigate();
+
 
     }
 
