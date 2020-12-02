@@ -30,6 +30,10 @@ public class NextDaysWeather extends AppCompatActivity {
     // Chama a request e popula os campos/imagens.
     private void changeScreen() {
 
+        TextView cityView = (TextView) findViewById(R.id.textView8);
+
+        cityView.setText(Storage.getLocation());
+
         //TextViews do dia da semana.
         final TextView[] days = {
                 (TextView) findViewById(R.id.textView9),
