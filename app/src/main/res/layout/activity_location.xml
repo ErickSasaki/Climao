@@ -6,44 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#7878FA"
+    tools:context=".LocationEmpty"
     >
 
-    <TextView
-        android:id="@+id/textView8"
+    <Button
+        android:id="@+id/bt_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Diga sua localização:"
-        android:textColor="#fff"
-        android:textSize="25dp"
+        android:background="@drawable/custom_button"
+
+        android:padding="10dp"
+        android:text="Ativar Localização"
+        android:textAllCaps="false"
+        android:textColor="#000"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
+    <TextView
+        android:id="@+id/textView47"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Cidade"
-        android:textColor="#fff"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="É necessário ativar a localização."
+        android:textFontWeight="700"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/bt_location"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Selecionar"
-        android:layout_marginTop="20dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

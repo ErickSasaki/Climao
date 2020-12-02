@@ -33,7 +33,7 @@ public class LoadingScreen extends AppCompatActivity {
         setContentView(R.layout.activity_loading_screen);
 
         // Configura a request passando o parâmetro da cidade.
-        Call<WeatherByCity> call = new RetrofitConfig().endpoints().getWeather("sorocaba");
+        Call<WeatherByCity> call = new RetrofitConfig().endpoints().getWeather(Storage.getLocation());
 
         // Chama a request que foi configurada anteriormente.
         call.enqueue(new Callback<WeatherByCity>() {
@@ -49,6 +49,7 @@ public class LoadingScreen extends AppCompatActivity {
                 // Chama a próxima request que usa os dados de latitude e longitude.
                 callNextDaysWeather(lat, lon);
                 callHourlyWeather(lat, lon);
+                navigate();
             }
 
             // Caso a request de erro mostra no log.
@@ -58,12 +59,12 @@ public class LoadingScreen extends AppCompatActivity {
             }
         });
 
-        navigate();
+
 
     }
 
     private void callNextDaysWeather(Float lat, Float lon) {
-        // Configura a request passando o parâmetro da cidade.
+        // Configura a request passando o parâmetro da latitude e longitude.
         Call<SevenDaysWeather> call = new RetrofitConfig().endpoints().getSevenDaysWeather(lat, lon);
 
         // Chama a request que foi configurada anteriormente.
@@ -85,7 +86,7 @@ public class LoadingScreen extends AppCompatActivity {
     }
 
     private void callHourlyWeather(double lat, double lon) {
-// Configura a request passando o parâmetro da cidade.
+        // Configura a request passando o parâmetro da latitude e longitude.
         Call<SevenDaysWeather> call = new RetrofitConfig().endpoints().getNextHoursWeather(lat, lon);
 
         // Chama a request que foi configurada anteriormente.

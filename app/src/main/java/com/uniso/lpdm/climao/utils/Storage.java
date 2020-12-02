@@ -16,6 +16,8 @@ public class Storage {
 
     private static Storage storageInstance = null;
 
+    private static String location = null;
+
     // Retorna a instancia unica de Storage.
     public static Storage getInstance() {
         if (storageInstance == null) {
@@ -46,5 +48,13 @@ public class Storage {
 
     public static void setHourly(Hourly[] hourly) {
         Storage.hourly = hourly;
+    }
+
+    public static String getLocation() {
+        return location;
+    }
+
+    public static void setLocation(String location) {
+        Storage.location = location;
     }
 }
